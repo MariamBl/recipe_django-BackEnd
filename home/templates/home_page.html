@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+    
+    <header class="text-center text-white d-flex masthead" style="background-image: url('https://wp-themes.com/wp-content/themes/fhotel-food-lite/images/slider1.jpg');">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h1 class="text-uppercase"><strong>Welcome to Home Baking </strong></h1>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <p class="text-faded mb-5"> Simple way to find, create and store your Recipies</p><a class="btn btn-primary btn-xl" role="button" href="#services">Discover our Recipes <i class="fa-solid fa-right-long"></i></a>
+            </div>
+
+        </div>
+    </header>
+
+     <ul>
+        {% for recette in recettes %}
+        <div class="col-lg-3 mx-5 my-4 d-inline-flex shadow ">
+          <div class="card shadow">
+            <div class="card-body d-flex flex-column">
+                <img src="{{ recette.image.url }}" class="card-img-top img-fluid" alt="Card Image">
+
+              <h5 class="card-title fw-bold">{{ recette.nom }} 
+                <span class="card-rating">
+                    {% if recette.note_moyenne < 0.5  %}
+                        <i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i>
+                    {% elif recette.note_moyenne >= 0.5 and recette.note_moyenne < 1 %}
+                        <i class="bi bi-star-half text-warning"></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i>
+                    {% elif recette.note_moyenne >= 1 and recette.note_moyenne < 1.5 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i>
+                    {% elif recette.note_moyenne >= 1.5 and recette.note_moyenne < 2 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-half text-warning"></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i>
+                    {% elif recette.note_moyenne >= 2 and recette.note_moyenne < 2.5 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning "></i><i class="bi bi-star "></i><i class="bi bi-star "></i><i class="bi bi-star "></i>
+                    {% elif recette.note_moyenne >= 2.5 and recette.note_moyenne < 3 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning "></i><i class="bi bi-star-half text-warning"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                    {% elif recette.note_moyenne >= 3 and recette.note_moyenne < 3.5 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning "></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                    {% elif recette.note_moyenne >= 3.5 and recette.note_moyenne < 4 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning "></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-half text-warning"></i><i class="bi bi-star"></i>
+                    {% elif recette.note_moyenne >= 4 and recette.note_moyenne < 4.5 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning "></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star"></i>
+                    {% elif recette.note_moyenne >= 4.5 and recette.note_moyenne < 5 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning "></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-half text-warning"></i>
+                    {% elif recette.note_moyenne == 5 %}
+                        <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning "></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i>
+
+
+                    {% endif %}
+              </h5>
+              <a href="{% url 'detail_recette' recette.id %}" class="btn btn-primary mt-auto">Détails</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </ul>
+    {% endblock %}
+
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 20vw;
+            object-fit: cover;
+        }
+    </style>

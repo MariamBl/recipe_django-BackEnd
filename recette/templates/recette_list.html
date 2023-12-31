@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<section>
+  <div class="row">
+    {% for recette in recipe %}
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <img class="card-img-top" src="{{ recette.image.url }}" alt="{{ recette.nom }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ recette.nom }}</h5>
+            <p class="card-text">{{ recette.description|truncatewords:20 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">{{ recette.temps_preparation }} min</small>
+              <small class="text-muted">{{ recette.personnes }} pers</small>
+              <div class="btn-group">
+                <a href="{% url 'detail_recette' recette.pk %}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                {% if user.is_authenticated and user == recette.auteur %}
+                  <a href="{% url 'modifier_recette' recette.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                  <a href="{% url 'supprimer_recette' recette.pk %}" class="btn btn-sm btn-outline-secondary">Supprimer</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+<nav aria-label="Recipe pagination">
+  <ul class="pagination justify-content-center">
+    {% if recipe.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1" aria-label="First page">&laquo; First</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ recipe.previous_page_number }}" aria-label="Previous page">&lsaquo; Previous</a>
+    </li>
+    {% endif %}
+
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Page {{ recipe.number }} of {{ recipe.paginator.num_pages }}</a>
+    </li>
+
+    {% if recipe.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ recipe.next_page_number }}" aria-label="Next page">Next &rsaquo;</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ recipe.paginator.num_pages }}" aria-label="Last page">Last &raquo;</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}

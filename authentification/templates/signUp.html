@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% block css %}
+<style>
+    body {
+        background-image: url('https://images.dailyhive.com/20160712113557/vegan.jpg');
+        background-repeat: no-repeat;
+       
+        
+        background-size: cover;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+
+<div class="bg-image container col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-11 mt-6 p-5 ">
+</div>
+<div class="bg-image container col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-11 mt-6 p-5 ">
+</div>
+<div class="container col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-11 mt-6 p-5 border rounded shadow bg-white">
+<img src="{% static 'base/assets/img/logo.png' %}" alt="user" width="250" class="d-block mx-auto mb-5">
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label><i class="fa-solid fa-user-plus"></i> Username</label>
+            
+            <input type="text" name="username" class="form-control" placeholder="Username" required
+                   value="{{ username }}">
+            {% for error in form.username.errors %}
+                <div class="invalid-feedback" style="display: block">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <div class="invalid-feedback">
+                Username required.
+            </div>
+        </div>
+      
+        
+        <div class="mb-3">
+            <label><i class="fa-solid fa-envelope"></i> Email</label>
+            <input type="email" name="email" class="form-control" placeholder="Email" required
+                   value="{{ email }}">
+            {% for error in form.email.errors %}
+                <div class="invalid-feedback" style="display: block">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <div class="invalid-feedback">
+                Email required.
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label><i class="fa-solid fa-lock"></i>Password</label>
+            <input type="password" name="password1" class="form-control" placeholder="Password"
+                   required>
+            {% for error in form.password1.errors %}
+                <div class="invalid-feedback" style="display: block">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <div class="invalid-feedback">
+                Password required.
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label><i class="fa-solid fa-lock"></i> Confirm Password</label>
+            <input type="password" name="password2" class="form-control" placeholder="Confirm password"
+                   required>
+            {% for error in form.password2.errors %}
+                <div class="invalid-feedback" style="display: block">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <div class="invalid-feedback">
+                Confirm password required.
+            </div>
+        </div>
+        <div class="d-grid gap-2 mt-3">
+            <input type="submit" name="register" value="Register" class="btn rounded btn-warning">
+        </div>
+        <br>
+        <label for="">Already registred? Login.<a href="{% url 'signIn' %}">here</a> </label>
+    </form>
+</div>	
+
+    <script>
+        const form = document.querySelector('.needs-validation')
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+    </script>
+{% endblock %}
